@@ -1,0 +1,23 @@
+version: '3'
+services:
+
+  rmi-server:
+    build: ./CurrencyConverterServer
+    container_name: rmi-server
+    ports:
+      - "1099:1099"
+    networks:
+      - rmi-net
+
+  rmi-client:
+    build: ./CurrencyConverterClient
+    container_name: rmi-client
+    depends_on:
+      - rmi-server
+    networks:
+      - rmi-net
+    environment:
+      - SERVER_HOST=rmi-server
+
+networks:
+  rmi-net:
